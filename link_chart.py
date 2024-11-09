@@ -116,7 +116,7 @@ print(df_link[mask].head(10))
 #pays_mentions.sort()
 #print(len(pays_mentions))"""
 liste_pays = df_pays_capitale["NOM"]
-
+liste_pays = [unidecode(pays) for pays in liste_pays]
 app = Dash(__name__)
 
 app.layout = html.Div([
@@ -144,6 +144,7 @@ def update_bar_chart(pays):
         if row['Pays2'] == pays:
             # Échanger les valeurs de Pays1 et Pays2
             df.at[index, 'Pays1'], df.at[index, 'Pays2'] = df.at[index, 'Pays2'], df.at[index, 'Pays1']
+    #df = df.head(10)
     fig = px.bar(df[mask], x="Pays2", y="NbLink")
     return fig
 
