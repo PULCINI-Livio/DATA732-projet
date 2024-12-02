@@ -5,7 +5,7 @@ import os
 files_name = [file_name for file_name in os.listdir() if '.json' in file_name]
 
 # name of the lightest file
-file_name = 'topaz-data732--france--www.fdesouche.com--20190101--20211231.json'
+file_name = 'fr.sputniknews.africa--20220630--20230630.json'
 
 # open and load file
 f = open(file_name, 'r', encoding='utf-8')

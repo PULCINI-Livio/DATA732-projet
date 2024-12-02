@@ -57,7 +57,7 @@ def metaSearch(fileName:str, year:str="0", month:str="0", day:str="0", category:
 
 
 
-def AnneeFreqKW(file_name: str):
+def anneeFreqKW(file_name: str):
     df = pd.DataFrame(columns=['year', 'keywords', 'frequence'])
     years = ["2022", "2023"]
 
@@ -72,6 +72,7 @@ def AnneeFreqKW(file_name: str):
 
 
 #print(AnneeFreqKW(file_name))
+
 
 
 app = Dash(__name__)
@@ -92,7 +93,7 @@ app.layout = html.Div([
     Output("graph", "figure"), 
     Input("dropdown", "value"))
 def update_bar_chart(year):
-    df = AnneeFreqKW(file_name)
+    df = anneeFreqKW(file_name)
     mask = df["year"] == year
     fig = px.bar(df[mask], x="keywords", y="frequence", 
                 barmode="group")
