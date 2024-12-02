@@ -153,4 +153,4 @@ def update_bar_chart(pays):
     return fig
 
 
-app.run_server(debug=True)
+#app.run_server(debug=True)

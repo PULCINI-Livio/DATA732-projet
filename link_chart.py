@@ -4,8 +4,10 @@ import plotly.express as px
 from dash import Dash, dcc, html, Input, Output
 from unidecode import unidecode
 
-#Chemin du fichier CSV
+#Chemin des fichiers
 file_path = 'data/liste-197-etats-2020.csv'
+
+file_name = "data/fr.sputniknews.africa--20220630--20230630.json"
 
 #Charger le fichier CSV en utilisant l'encodage ISO-8859-1 et le point-virgule comme délimiteur
 df = pd.read_csv(file_path, encoding='ISO-8859-1', delimiter=';')
@@ -18,11 +20,7 @@ liste_pays = [unidecode(pays) for pays in liste_pays]
 #Afficher les premières lignes pour vérification
 print(df_pays_capitale)
 
-#print('France' in df['NOM'].unique())
 
-
-
-file_name = "data/fr.sputniknews.africa--20220630--20230630.json"
 
 def trouver_pays_par_capitale(capitale):
     try:
@@ -73,7 +71,7 @@ def cpt_link_btw_states(fileName: str):
 
     Keyword arguments:
     fileName -- nom du fichier json
-    Return: retourne un dictionnaire
+    Return: retourne un df
     """
 
     # Charger le fichier JSON      
@@ -151,4 +149,4 @@ def update_bar_chart(pays):
     fig = px.bar(df[mask], x="Pays2", y="NbLink")
     return fig
 
-app.run_server(debug=True)
+#app.run_server(debug=True)

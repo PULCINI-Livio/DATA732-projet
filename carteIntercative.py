@@ -8,35 +8,32 @@ file_name = "data/fr.sputniknews.africa--20220630--20230630.json"
 file_path = 'data/liste-197-etats-2020.csv'
 
 
-# Charger le fichier JSON
-with open(file_name, 'r') as f:
-    data = json.load(f)
 
 #Charger le fichier CSV en utilisant l'encodage ISO-8859-1 et le point-virgule comme délimiteur
 df = pd.read_csv(file_path, encoding='ISO-8859-1', delimiter=';')
 #Sélectionner seulement les colonnes "NOM" et "CAPITALE"
-df_pays_capitale = df[['NOM', 'CAPITALE','CODE']]
+df_pays_capitale_code = df[['NOM', 'CAPITALE','CODE']]
 
 #Afficher les premières lignes pour vérification
 
 def trouver_pays_par_capitale(capitale):
     try:
-        pays = df.loc[df_pays_capitale['Capitale'] == capitale, 'Pays'].iloc[0]
+        pays = df_pays_capitale_code.loc[df_pays_capitale_code['Capitale'] == capitale, 'Pays'].iloc[0]
         return pays
     except IndexError:
         return "Capitale non trouvée"
     
 def is_a_state(loc):
-    return loc.capitalize() in df['NOM'].unique()
+    return loc.capitalize() in df_pays_capitale_code['NOM'].unique()
 
 def is_a_capital(loc):
-    return loc.capitalize() in df['CAPITALE'].unique()
+    return loc.capitalize() in df_pays_capitale_code['CAPITALE'].unique()
 
-df_Occurence=pd.DataFrame({'pays': [],'Occurence': [],'code_iso':[]})
+
 
 
 """ for i in df_Occurence['pays']:#parcour de ma liste d'occurence
-         if lieu in df['NOM'].unique():
+         if lieu in df_pays_capitale_code['NOM'].unique():
                 if is_a_state(lieu)  :
 """
 
@@ -45,10 +42,14 @@ def traitement():
     fonction qui permet de traité les donnée du json pour pouvoir compté le nombre d'occurence 
     des pays en comptant le nombre d'apparition de son nom et celui de leur capitale 
     """
+    df_Occurence=pd.DataFrame({'pays': [],'Occurence': [],'code_iso':[]})
+    # Charger le fichier JSON
+    with open(file_name, 'r') as f:
+        data = json.load(f)
     for lieu in data["metadata"]["all"]["loc"]:#parcour des données
-        if lieu in df['NOM'].unique() and is_a_state(lieu):
+        if lieu in df_pays_capitale_code['NOM'].unique() and is_a_state(lieu):
             
-            df_Occurence.loc[len(df_Occurence)]=[lieu,data["metadata"]["all"]["loc"][lieu], df.loc[df['NOM'] == lieu, 'CODE'].iloc[0]]
+            df_Occurence.loc[len(df_Occurence)]=[lieu,data["metadata"]["all"]["loc"][lieu], df_pays_capitale_code.loc[df_pays_capitale_code['NOM'] == lieu, 'CODE'].iloc[0]]
         
     return df_Occurence
 
@@ -83,7 +84,7 @@ app.layout = html.Div([
     html.H4('Carte des occurrences par pays'),
     dcc.Dropdown(
         id="dropdown",
-        options=[{"label": pays, "value": code_iso} for pays, code_iso in zip(df_Occurence["pays"], df_Occurence["code_iso"])],
+        options=[{"label": pays, "value": code_iso} for pays, code_iso in zip(traitement()["pays"], traitement()["code_iso"])],
         value="FRA",
         clearable=False,
     ),
@@ -97,7 +98,7 @@ app.layout = html.Div([
 def update_map(selected_country):
     # Créer une carte choroplèthe
     fig = px.choropleth(
-        df_Occurence,
+        traitement(),
         locations="code_iso",
         color="Occurence",
         hover_name="pays",
@@ -123,8 +124,8 @@ def update_dropdown_from_map(click_data):
         return click_data["points"][0]["location"]  # Renvoie le code_iso du pays cliqué
     return "FRA"  # Valeur par défaut
 
-if __name__ == "__main__":
-    app.run_server(debug=True)
+#if __name__ == "__main__":
+#    app.run_server(debug=True)
 
 
 
