@@ -3,9 +3,9 @@ import json
 import plotly.express as px
 from dash import Dash, html, dcc, Input, Output
 
-file_name = "fr.sputniknews.africa--20220630--20230630.json"
+file_name = "data/fr.sputniknews.africa--20220630--20230630.json"
 #Chemin du fichier CSV
-file_path = 'liste-197-etats-2020.csv'
+file_path = 'data/liste-197-etats-2020.csv'
 
 
 # Charger le fichier JSON
