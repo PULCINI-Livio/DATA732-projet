@@ -5,7 +5,7 @@ from dash import Dash, dcc, html, Input, Output
 from unidecode import unidecode
 
 #Chemin du fichier CSV
-file_path = 'liste-197-etats-2020.csv'
+file_path = 'data/liste-197-etats-2020.csv'
 
 #Charger le fichier CSV en utilisant l'encodage ISO-8859-1 et le point-virgule comme délimiteur
 df = pd.read_csv(file_path, encoding='ISO-8859-1', delimiter=';')
@@ -22,7 +22,7 @@ print(df_pays_capitale)
 
 
 
-file_name = "fr.sputniknews.africa--20220630--20230630.json"
+file_name = "data/fr.sputniknews.africa--20220630--20230630.json"
 
 def trouver_pays_par_capitale(capitale):
     try:
