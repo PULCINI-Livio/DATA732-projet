@@ -23,6 +23,20 @@ liste_pays = [unidecode(pays) for pays in liste_pays]
 print(df_pays_capitale)
 print('Russie' in df['NOM'].unique())
 
+#Fonctions génériques
+def trouver_pays_par_capitale(capitale):
+    try:
+        pays = df.loc[df_pays_capitale['CAPITALE'] == capitale, 'NOM'].iloc[0]
+        return pays
+    except IndexError:
+        return "Capitale non trouvée"
+    
+def is_a_state(loc):
+    return loc.capitalize() in df['NOM'].unique()
+
+def is_a_capital(loc):
+    return loc.capitalize() in df['CAPITALE'].unique()
+
 
 def occurencesParPays(fileName: str, pays: str):
     """Retourne un dataframe qui contient le nombre d'articles par mois pour un pays donné.
@@ -51,8 +65,11 @@ def occurencesParPays(fileName: str, pays: str):
                         if day in data[year][month]:
                             for i in range(len(data[year][month][day]) - 1):
                                 for location in data[year][month][day][i]["loc"]:
-                                    if location in df_pays_capitale["NOM"].unique():
+                                    if location in df_pays_capitale["NOM"].unique() or location in df_pays_capitale["CAPITALE"].unique():
                                         date_str = f"{year}/{month}"
+
+                                        if is_a_capital(location): #If a capital, turning it into country
+                                            location = trouver_pays_par_capitale(location)
 
                                         # Filtrer le DataFrame des résultats pour trouver la correspondance
                                         existing_entry = res[
