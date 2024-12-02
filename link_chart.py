@@ -12,6 +12,9 @@ df = pd.read_csv(file_path, encoding='ISO-8859-1', delimiter=';')
 #Sélectionner seulement les colonnes "NOM" et "CAPITALE"
 df_pays_capitale = df[['NOM', 'CAPITALE']]
 
+liste_pays = df_pays_capitale["NOM"]
+liste_pays = [unidecode(pays) for pays in liste_pays]
+
 #Afficher les premières lignes pour vérification
 print(df_pays_capitale)
 
@@ -73,7 +76,7 @@ def cpt_link_btw_states(fileName: str):
     Return: retourne un dictionnaire
     """
 
-    # Charger le fichier JSON
+    # Charger le fichier JSON      
     with open(file_name, 'r') as f:
         data = json.load(f)
 
@@ -90,7 +93,7 @@ def cpt_link_btw_states(fileName: str):
                 if month in data[year]:
                     for day in custom_order_day:
                         if day in data[year][month]:
-                            for i in range(len(data[year][month][day])-1):#on parcour chaque article
+                            for i in range(len(data[year][month][day])-1):#on parcours chaque article
                                 #on regarde les deux pays ayant le plus d'occurence (on compte aussi la capitale apr la suite)
                                 #data[year][month][day][i]["loc"]
                                 thoos = two_highest_occurences_of_states(data[year][month][day][i]["loc"])
@@ -115,8 +118,6 @@ print(df_link[mask].head(10))
 #pays_mentions = list(set(df_link['Pays1']).union(set(df_link['Pays2'])))
 #pays_mentions.sort()
 #print(len(pays_mentions))"""
-liste_pays = df_pays_capitale["NOM"]
-liste_pays = [unidecode(pays) for pays in liste_pays]
 
 
 app = Dash(__name__)
