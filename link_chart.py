@@ -117,6 +117,8 @@ print(df_link[mask].head(10))
 #print(len(pays_mentions))"""
 liste_pays = df_pays_capitale["NOM"]
 liste_pays = [unidecode(pays) for pays in liste_pays]
+
+
 app = Dash(__name__)
 
 app.layout = html.Div([
