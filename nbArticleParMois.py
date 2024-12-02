@@ -44,6 +44,6 @@ def creer_figure():
     
     fig = px.bar(df, x="Date", y="Nombre d'articles")
     fig.show()
-    fig.write_html("nombreArticlesParMois.html")
+    #fig.write_html("nombreArticlesParMois.html")
 
 creer_figure()
