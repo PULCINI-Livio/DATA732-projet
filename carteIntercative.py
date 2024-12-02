@@ -1,6 +1,7 @@
 import pandas as pd 
 import json
 import plotly.express as px
+from dash import Dash, html, dcc, Input, Output
 
 file_name = "fr.sputniknews.africa--20220630--20230630.json"
 #Chemin du fichier CSV
