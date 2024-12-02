@@ -70,7 +70,7 @@ for key in sorted(data, key=data.get, reverse=True)[:10]:
 
 fig = px.bar(df, x="Mot clé", y="Fréquence")
 fig.show()
-fig.write_html("motsCleLesPlusFrequents.html")
+#fig.write_html("motsCleLesPlusFrequents.html")
 
 
 
