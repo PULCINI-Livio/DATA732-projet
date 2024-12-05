@@ -29,23 +29,53 @@ df_line = creer_figure()
 # Initialisation de l'application Dash
 app = Dash(__name__)
 
-app.layout = html.Div([
-    
-    dcc.Dropdown(
-        id="dropdown",
-        options=liste_pays,
-        value="Russie",
-        clearable=False,
-    ),
-    html.H4('Carte'),
-    dcc.Graph(id="map"),
-
-    html.H4("Graphique des liens"),
-    dcc.Graph(id="bar-chart"),
-
-    html.H4("Graphique des occurences"),
-    dcc.Graph(id="line-chart"),
-])
+app.layout = html.Div(
+    [
+        # Dropdown et carte sur la gauche
+        html.Div(
+            [
+                dcc.Dropdown(
+                    id="dropdown",
+                    options=liste_pays,
+                    value="Russie",
+                    clearable=False,
+                ),
+                html.H4('Carte'),
+                dcc.Graph(id="map"),
+            ],
+            style={
+                'flex': '1',  # Largeur relative pour occuper moins d'espace
+                'padding': '10px',
+            },
+        ),
+        # Graphiques B et C sur la droite
+        html.Div(
+            [
+                html.Div(
+                    [
+                        html.H4("Graphique des liens"),
+                        dcc.Graph(id="bar-chart"),
+                    ],
+                    style={'margin-bottom': '20px'},  # Espacement entre les graphiques
+                ),
+                html.Div(
+                    [
+                        html.H4("Graphique des occurrences"),
+                        dcc.Graph(id="line-chart"),
+                    ]
+                ),
+            ],
+            style={
+                'flex': '1',  # Largeur relative pour occuper plus d'espace
+                'padding': '10px',
+            },
+        ),
+    ],
+    style={
+        'display': 'flex',  # Utilisation de flexbox pour une disposition en colonnes
+        'flex-direction': 'row',  # Aligner les div horizontalement
+    },
+)
 
 # Callback pour mettre à jour la carte
 @app.callback(
@@ -97,9 +127,9 @@ def update_bar_chart(pays):
         if row['Pays2'] == pays:
             # Échanger les valeurs de Pays1 et Pays2
             df_bar.at[index, 'Pays1'], df_bar.at[index, 'Pays2'] = df_bar.at[index, 'Pays2'], df_bar.at[index, 'Pays1']
-    #df_bar = df_bar.head(10)
+    
     fig = px.bar(
-        df_bar[mask], 
+        df_bar[mask].head(5), 
         x="Pays2", 
         y="NbLink",
         title=f"Nombre de lien avec chaque pays pour {pays}",)
