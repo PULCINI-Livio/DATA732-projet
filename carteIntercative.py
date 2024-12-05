@@ -37,7 +37,7 @@ def is_a_capital(loc):
                 if is_a_state(lieu)  :
 """
 
-def traitement():
+def traitement(fileName: str):
     """
     fonction qui permet de traité les donnée du json pour pouvoir compté le nombre d'occurence 
     des pays en comptant le nombre d'apparition de son nom et celui de leur capitale 
