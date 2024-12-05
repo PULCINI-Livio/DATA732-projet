@@ -53,7 +53,6 @@ def traitement(fileName: str):
         
     return df_Occurence
 
-traitement()
 
 
 # Créer la carte à bulles
@@ -84,7 +83,7 @@ app.layout = html.Div([
     html.H4('Carte des occurrences par pays'),
     dcc.Dropdown(
         id="dropdown",
-        options=[{"label": pays, "value": code_iso} for pays, code_iso in zip(traitement()["pays"], traitement()["code_iso"])],
+        options=[{"label": pays, "value": code_iso} for pays, code_iso in zip(traitement(file_name)["pays"], traitement(file_name)["code_iso"])],
         value="FRA",
         clearable=False,
     ),

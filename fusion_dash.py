@@ -96,7 +96,11 @@ def update_bar_chart(pays):
             # Échanger les valeurs de Pays1 et Pays2
             df_bar.at[index, 'Pays1'], df_bar.at[index, 'Pays2'] = df_bar.at[index, 'Pays2'], df_bar.at[index, 'Pays1']
     #df_bar = df_bar.head(10)
-    fig = px.bar(df_bar[mask], x="Pays2", y="NbLink")
+    fig = px.bar(
+        df_bar[mask], 
+        x="Pays2", 
+        y="NbLink",
+        title=f"Nombre de lien avec chaque pays pour {pays}",)
     return fig
 
 
