@@ -41,7 +41,13 @@ app.layout = html.Div(
                     clearable=False,
                 ),
                 html.H4('Carte'),
-                dcc.Graph(id="map"),
+                dcc.Graph(
+                    id="map",
+                    config={
+                    'responsive': True,  # Redimensionne automatiquement le graphique
+                    'scrollZoom': True,  # Active le zoom avec la molette de la souris
+                    },
+                ),
             ],
             style={
                 'flex': '1',  # Largeur relative pour occuper moins d'espace
@@ -54,14 +60,26 @@ app.layout = html.Div(
                 html.Div(
                     [
                         html.H4("Graphique des liens"),
-                        dcc.Graph(id="bar-chart"),
+                        dcc.Graph(
+                            id="bar-chart",
+                            config={
+                            'responsive': True,  # Redimensionne automatiquement le graphique
+                            'scrollZoom': True,  # Active le zoom avec la molette de la souris
+                            },
+                        ),
                     ],
                     style={'margin-bottom': '20px'},  # Espacement entre les graphiques
                 ),
                 html.Div(
                     [
                         html.H4("Graphique des occurrences"),
-                        dcc.Graph(id="line-chart"),
+                        dcc.Graph(
+                            id="line-chart",
+                            config={
+                            'responsive': True,  # Redimensionne automatiquement le graphique
+                            'scrollZoom': True,  # Active le zoom avec la molette de la souris
+                            },
+                        ),
                     ]
                 ),
             ],
