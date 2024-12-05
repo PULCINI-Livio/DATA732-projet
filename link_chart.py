@@ -18,7 +18,7 @@ liste_pays = df_pays_capitale["NOM"]
 liste_pays = [unidecode(pays) for pays in liste_pays]
 
 #Afficher les premières lignes pour vérification
-print(df_pays_capitale)
+#print(df_pays_capitale)
 
 
 
@@ -107,15 +107,15 @@ def cpt_link_btw_states(fileName: str):
 
     return res.sort_values(by="NbLink", ascending=False)
 
-"""df_link = cpt_link_btw_states(file_name)
+df_link = cpt_link_btw_states(file_name)
 #print(df_link.head(10))
 # Sauvegarder un DataFrame en CSV
 df_link.to_csv("link_nb_btw_states.csv", index=False)
-mask = (df_link["Pays1"] == "Russie") | (df_link["Pays2"] == "Russie")
-print(df_link[mask].head(10))
+#mask = (df_link["Pays1"] == "Russie") | (df_link["Pays2"] == "Russie")
+#print(df_link[mask].head(10))
 #pays_mentions = list(set(df_link['Pays1']).union(set(df_link['Pays2'])))
 #pays_mentions.sort()
-#print(len(pays_mentions))"""
+#print(len(pays_mentions))
 
 
 app = Dash(__name__)
@@ -138,7 +138,6 @@ app.layout = html.Div([
     Input("dropdown", "value"))
 def update_bar_chart(pays):
     df = cpt_link_btw_states(file_name)
-    df = df
     mask = (df["Pays1"] == pays) | (df["Pays2"] == pays)
     #inversion des pays pour ne mettre {pays} que dans la première colonne
     for index, row in df.iterrows():
