@@ -20,8 +20,8 @@ liste_pays = [unidecode(pays) for pays in liste_pays]
 
 
 # Afficher les premières lignes pour vérification
-print(df_pays_capitale)
-print('Russie' in df['NOM'].unique())
+#print(df_pays_capitale)
+#print('Russie' in df['NOM'].unique())
 
 #Fonctions génériques
 def trouver_pays_par_capitale(capitale):
@@ -38,7 +38,7 @@ def is_a_capital(loc):
     return loc.capitalize() in df['CAPITALE'].unique()
 
 
-def occurencesParPays(fileName: str, pays: str):
+def occurencesParPays(fileName: str):
     """Retourne un dataframe qui contient le nombre d'articles par mois pour un pays donné.
 
     Keyword arguments:
@@ -68,7 +68,7 @@ def occurencesParPays(fileName: str, pays: str):
                                     if location in df_pays_capitale["NOM"].unique() or location in df_pays_capitale["CAPITALE"].unique():
                                         date_str = f"{year}/{month}"
 
-                                        if is_a_capital(location): #If a capital, turning it into country
+                                        if is_a_capital(location): #If a capital, turning it into its country
                                             location = trouver_pays_par_capitale(location)
 
                                         # Filtrer le DataFrame des résultats pour trouver la correspondance
@@ -100,13 +100,13 @@ def occurencesParPays(fileName: str, pays: str):
 #print(res_russie)
 #print(smartSearch(data, "2023", "5", "0", "org"))
 
-def creer_figure(pays):
+def creer_figure():
     # Appeler la fonction occurencesParPays pour obtenir le DataFrame
-    df = occurencesParPays(file_name, pays)
+    df = occurencesParPays(file_name)
     
     # Vérifier que le DataFrame n'est pas vide
     if df.empty:
-        print(f"Aucune donnée trouvée pour le pays : {pays}")
+    #    print(f"Aucune donnée trouvée pour le pays : {pays}")
         return pd.DataFrame()  # Retourne un DataFrame vide pour éviter les erreurs
 
     # Combiner Date et Pays pour créer une nouvelle colonne "Date_Pays"
@@ -115,7 +115,8 @@ def creer_figure(pays):
     # Retourner le DataFrame
     return df
 
-    
+#print(creer_figure())
+
 app = Dash(__name__)
 
 app.layout = html.Div([
