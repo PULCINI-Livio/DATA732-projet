@@ -24,6 +24,7 @@ liste_pays = [unidecode(pays) for pays in liste_pays]
 # Initialisation des dataframes de chaque graphique 
 df_map = traitement(file_name)
 df_bar = cpt_link_btw_states(file_name)
+df_line = creer_figure()
 
 # Initialisation de l'application Dash
 app = Dash(__name__)
@@ -88,6 +89,7 @@ def update_dropdown_from_map(click_data):
     [Input("dropdown", "value")]
 )
 def update_bar_chart(pays):
+    pays = unidecode(pays)
     ## df_bar = cpt_link_btw_states(file_name)
     mask = (df_bar["Pays1"] == pays) | (df_bar["Pays2"] == pays)
     #inversion des pays pour ne mettre {pays} que dans la première colonne
@@ -110,8 +112,7 @@ def update_bar_chart(pays):
     [Input("dropdown", "value")]
 )
 def update_line_chart(pays):
-    # Appeler creer_figure pour obtenir les données
-    df_line = creer_figure(pays)
+    #pays = unidecode(pays)
     
     # Vérifier si df_line est vide ou None
     if df_line is None or df_line.empty:
