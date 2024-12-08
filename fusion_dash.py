@@ -23,8 +23,11 @@ liste_pays = [unidecode(pays) for pays in liste_pays]
 
 # Initialisation des dataframes de chaque graphique 
 df_map = traitement(file_name)
+print("df map initié")
 df_bar = cpt_link_btw_states(file_name)
+print("df liens initié")
 df_line = creer_figure()
+print("df occurence initié")
 
 # Initialisation de l'application Dash
 app = Dash(__name__)
@@ -54,7 +57,7 @@ app.layout = html.Div(
                 'padding': '10px',
             },
         ),
-        # Graphiques B et C sur la droite
+        # Graphiques liens et occurences sur la droite
         html.Div(
             [
                 html.Div(
