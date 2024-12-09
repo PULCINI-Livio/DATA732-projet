@@ -24,6 +24,15 @@ liste_pays = [unidecode(pays) for pays in liste_pays]
 #print('Russie' in df['NOM'].unique())
 
 #Fonctions génériques
+
+def capitalize_after_hyphen(text):
+    # Divise la chaîne autour des tirets
+    words = text.split('-')
+    # Met en majuscule la première lettre de chaque segment
+    capitalized_words = [word.capitalize() for word in words]
+    # Rejoint les segments avec un tiret
+    return '-'.join(capitalized_words)
+
 def trouver_pays_par_capitale(capitale):
     try:
         pays = df.loc[df_pays_capitale['CAPITALE'] == capitale, 'NOM'].iloc[0]
@@ -32,10 +41,10 @@ def trouver_pays_par_capitale(capitale):
         return "Capitale non trouvée"
     
 def is_a_state(loc):
-    return loc.capitalize() in df['NOM'].unique()
+    return capitalize_after_hyphen(loc) in df['NOM'].unique()
 
 def is_a_capital(loc):
-    return loc.capitalize() in df['CAPITALE'].unique()
+    return capitalize_after_hyphen(loc) in df['CAPITALE'].unique()
 
 
 def occurencesParPays(fileName: str):

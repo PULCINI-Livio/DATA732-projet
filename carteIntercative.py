@@ -16,6 +16,14 @@ df_pays_capitale_code = df[['NOM', 'CAPITALE','CODE']]
 
 #Afficher les premières lignes pour vérification
 
+def capitalize_after_hyphen(text):
+    # Divise la chaîne autour des tirets
+    words = text.split('-')
+    # Met en majuscule la première lettre de chaque segment
+    capitalized_words = [word.capitalize() for word in words]
+    # Rejoint les segments avec un tiret
+    return '-'.join(capitalized_words)
+
 def trouver_pays_par_capitale(capitale):
     try:
         pays = df_pays_capitale_code.loc[df_pays_capitale_code['Capitale'] == capitale, 'Pays'].iloc[0]
@@ -24,10 +32,10 @@ def trouver_pays_par_capitale(capitale):
         return "Capitale non trouvée"
     
 def is_a_state(loc):
-    return loc.capitalize() in df_pays_capitale_code['NOM'].unique()
+    return capitalize_after_hyphen(loc) in df_pays_capitale_code['NOM'].unique()
 
 def is_a_capital(loc):
-    return loc.capitalize() in df_pays_capitale_code['CAPITALE'].unique()
+    return capitalize_after_hyphen(loc) in df_pays_capitale_code['CAPITALE'].unique()
 
 
 

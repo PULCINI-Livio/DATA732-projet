@@ -21,6 +21,13 @@ liste_pays = [unidecode(pays) for pays in liste_pays]
 #print(df_pays_capitale)
 
 
+def capitalize_after_hyphen(text):
+    # Divise la chaîne autour des tirets
+    words = text.split('-')
+    # Met en majuscule la première lettre de chaque segment
+    capitalized_words = [word.capitalize() for word in words]
+    # Rejoint les segments avec un tiret
+    return '-'.join(capitalized_words)
 
 def trouver_pays_par_capitale(capitale):
     try:
@@ -30,10 +37,10 @@ def trouver_pays_par_capitale(capitale):
         return "Capitale non trouvée"
     
 def is_a_state(loc):
-    return loc.capitalize() in df['NOM'].unique()
+    return capitalize_after_hyphen(loc) in df['NOM'].unique()
 
 def is_a_capital(loc):
-    return loc.capitalize() in df['CAPITALE'].unique()
+    return capitalize_after_hyphen(loc) in df['CAPITALE'].unique()
 
 def two_highest_occurences_of_states(loc_tab):
     res = {}
@@ -56,10 +63,10 @@ def two_highest_occurences_of_states(loc_tab):
 # Fonction pour incrémenter NbLink pour deux pays donnés
 def increment_link(df, pays1, pays2):
     # Vérifier si la ligne avec ces deux pays (dans cet ordre) existe déjà
-    condition = ((df['Pays1'] == pays1) & (df['Pays2'] == pays2)) | ((df['Pays1'] == pays2) & (df['Pays2'] == pays1))
+    condition = ((df['Pays1'] == capitalize_after_hyphen(pays1)) & (df['Pays2'] == capitalize_after_hyphen(pays2))) | ((df['Pays1'] == capitalize_after_hyphen(pays2)) & (df['Pays2'] == capitalize_after_hyphen(pays1)))
     
     if df[condition].empty:  # Si aucune ligne ne correspond, on ajoute une nouvelle ligne
-        new_row = {"Pays1": pays1, "Pays2": pays2, "NbLink": 1}
+        new_row = {"Pays1": capitalize_after_hyphen(pays1), "Pays2": capitalize_after_hyphen(pays2), "NbLink": 1}
         df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
     else:  # Si une ligne existe déjà, on incrémente le NbLink
         df.loc[condition, "NbLink"] += 1

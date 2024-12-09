@@ -22,12 +22,12 @@ liste_pays = df_pays_capitale["NOM"]
 liste_pays = [unidecode(pays) for pays in liste_pays]
 
 # Initialisation des dataframes de chaque graphique 
-df_map = traitement(file_name)
+"""df_map = traitement(file_name)
 print("df map initié")
 df_bar = cpt_link_btw_states(file_name)
 print("df liens initié")
 df_line = creer_figure()
-print("df occurence initié")
+print("df occurence initié")"""
 
 # Initialisation de l'application Dash
 app = Dash(__name__)
@@ -182,4 +182,13 @@ def update_line_chart(pays):
     return fig
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    # Initialisation des DataFrames
+    df_map = traitement(file_name)
+    print("df map initié")
+    df_bar = cpt_link_btw_states(file_name)
+    print("df liens initié")
+    df_line = creer_figure()
+    print("df occurence initié")
+
+    # Lancer le serveur sans reloader automatique
+    app.run_server(debug=True, use_reloader=False)
