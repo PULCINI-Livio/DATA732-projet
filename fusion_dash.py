@@ -43,7 +43,6 @@ app.layout = html.Div(
                     value="Russie",
                     clearable=False,
                 ),
-                html.H4('Carte'),
                 dcc.Graph(
                     id="map",
                     config={
@@ -62,7 +61,6 @@ app.layout = html.Div(
             [
                 html.Div(
                     [
-                        html.H4("Graphique des liens"),
                         dcc.Graph(
                             id="bar-chart",
                             config={
@@ -75,7 +73,6 @@ app.layout = html.Div(
                 ),
                 html.Div(
                     [
-                        html.H4("Graphique des occurrences"),
                         dcc.Graph(
                             id="line-chart",
                             config={
